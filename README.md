@@ -18,9 +18,11 @@ Flow Finance provides a robust platform for users to manage their financial tran
 To set up Flow Finance locally, follow these steps:
 
 1. Clone the repository: `git clone https://github.com/ethandiedericks/flow.git`
-2. Install dependencies: `pip install -r requirements.txt`
-3. Configure your django secret key and debug settings in `settings.py`
-4. Make migrations: `python manage.py makemigrations`
-5. Apply migrations: `python manage.py migrate`
-6. Create a superuser: `python manage.py createsuperuser`
-7. Start the development server: `python manage.py runserver`
+2. Create a virtual environment: (mac)`python3 -m venv .venv` 
+3. Activate the virtual environment: `source .venv/bin/activate`
+4. Install dependencies: `pip install -r requirements.txt`
+5. Configure your django secret key and debug settings in `settings.py`
+6. Make migrations: `python manage.py makemigrations`
+7. Apply migrations: `python manage.py migrate`
+8. Create a superuser: `python manage.py createsuperuser`
+9. Start the development server: `python manage.py runserver`
