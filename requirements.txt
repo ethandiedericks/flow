@@ -1,0 +1,14 @@
+asgiref==3.7.2
+crispy-bootstrap5==2023.10
+dj-database-url==2.1.0
+dj-email-url==1.0.6
+Django==5.0.1
+django-cache-url==3.4.5
+django-crispy-forms==2.1
+environs==9.5.0
+marshmallow==3.20.1
+packaging==23.2
+psycopg2-binary==2.9.9
+python-dotenv==1.0.0
+sqlparse==0.4.4
+typing_extensions==4.9.0
