@@ -1,0 +1,144 @@
+
+{% extends '_base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block title %}Budget{% endblock title %}
+
+{% block content %}
+<div class="container budget-container ">
+    <header class="budget-head mt-2">
+        <div class="container ">
+            <h1 class="display-4 text-center">Manage Your Finances</h1>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="row">
+            <div class="col-md-4 mt-5">
+                <div class="inc-container shadow">
+
+                    <h2 class="h4">Income Sources</h2>
+                    <form method="post" id="incomeForm">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            {{ income_form.income_name|as_crispy_field }}
+                        </div>
+                        <div class="form-group custom-income-group d-none">
+                            <small id="customIncomeHelp" class="form-text text-muted">Can't find your income? Add it here:</small>
+                            <input type="text" class="form-control" id="customIncome" name="custom_income" placeholder="Enter your custom income">
+                        </div>
+                        {{ income_form.income_amount|as_crispy_field }}
+                        {{ income_form.future_income_date|as_crispy_field }}
+                        <div class="d-flex">
+                            <button type="submit" name="income_submit" class="btn btn-custom">Add Income</button>
+                        </div>
+                        
+                    </form>
+                    <hr>
+                    <h4 class="h6">Total Income: {{ total_income }}</h4>
+                </div>
+                
+                <!-- pill to display added incomes -->
+                <div class="row mt-3">
+                    {% for income in income_data %}
+                 
+                    <div class="col-md-auto mt-2">
+                        <span class="badge inc-badge d-flex p-2 align-items-center rounded-pill" style="background-image: linear-gradient(to right, #28a745, #218838);">
+                            <span class="px-1">{{income.income_name}} - {{ income.total}}</span>
+                            <a href="">
+                                <svg xmlns="http://www.w3.org/2000/svg" height="16" width="16" viewBox="0 0 512 512"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free-->
+                                    <path fill="#ffffff" d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM175 175c9.4-9.4 24.6-9.4 33.9 0l47 47 47-47c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9l-47 47 47 47c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0l-47-47-47 47c-9.4 9.4-24.6 9.4-33.9 0s-9.4-24.6 0-33.9l47-47-47-47c-9.4-9.4-9.4-24.6 0-33.9z"/>
+                                </svg>
+                            </a>
+                        </span>
+                        
+                    </div>
+                    {% endfor %}
+                </div>
+                
+            </div>
+            <div class="col-md-4 mt-5">
+                <div class="exp-container shadow">
+
+                    <h2 class="h4">Expenses</h2>
+                    <form method="post" id="expenseForm" class="expense-form">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            {{ expense_form.expense_name|as_crispy_field }}
+                        </div>
+                        <div class="form-group custom-expense-group d-none">
+                            <small id="customIncomeHelp" class="form-text text-muted">Can't find your expense? Add it here:</small>
+                            <input type="text" class="form-control" id="customExpense" name="custom_expense" placeholder="Enter your custom expense">
+                        </div>
+                        {{ expense_form.expense_amount|as_crispy_field }}
+                        {{ expense_form.future_expense_date|as_crispy_field }}
+                        <button type="submit" name="expense_submit" class="btn btn-danger">Add Expense</button>
+                    </form>
+                    <hr>
+                    <h4 class="h6">Total Expenses: {{ total_expenses }}</h4>
+                </div>
+
+                <!-- pill to display added expenses -->
+                <div class="row mt-3">
+                    {% for expense in expense_data %}
+                    
+                    <div class="col-md-auto mt-2">
+                        <span class="badge text-bg-danger d-flex p-2 align-items-center rounded-pill" style="background-image: linear-gradient(to right, #dc3545, #ff073a);">
+                            <span class="px-1">{{expense.expense_name }} - {{ expense.total }}</span>
+                            <a href="#">
+                                <svg xmlns="http://www.w3.org/2000/svg" height="16" width="16" viewBox="0 0 512 512"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
+                                    <path fill="#ffffff" d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM175 175c9.4-9.4 24.6-9.4 33.9 0l47 47 47-47c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9l-47 47 47 47c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0l-47-47-47 47c-9.4 9.4-24.6 9.4-33.9 0s-9.4-24.6 0-33.9l47-47-47-47c-9.4-9.4-9.4-24.6 0-33.9z"/>
+                                </svg>
+                            </a>
+                        </span>
+                        
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="col-md-4 mt-5"> 
+                <div class="invest-container shadow">
+
+                    <h2 class="h4">Investments</h2>
+                    <form method="post" id="investmentForm" class="investment-form">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            {{ investment_form.investment_name|as_crispy_field }}
+                        </div>
+                        <div class="form-group custom-investment-group d-none">
+                            <small id="customInvestmentHelp" class="form-text text-muted">Can't find your investment? Add it here:</small>
+                            <input type="text" class="form-control" id="customInvestment" name="custom_investment" placeholder="Enter your custom investment">
+                        </div>
+                        {{ investment_form.investment_amount|as_crispy_field }}
+                        {{ investment_form.future_investment_date|as_crispy_field }}
+                        <button type="submit" name="investment_submit" class="btn btn-primary">Add Investment</button>
+                    </form>
+                    <hr>
+                    <h4 class="h6">Total Investments: {{ total_investments }}</h4>
+                </div>
+                
+                <!-- pill to display added expenses -->
+                <div class="row mt-3">
+                    {% for investment in investment_data %}
+                    
+                    <div class="col-md-auto mt-2">
+                        <span class="badge text-bg-primary d-flex p-2 align-items-center rounded-pill" style="background-image: linear-gradient(to right, #007bff, #6610f2);">
+                            <span class="px-1">{{investment.investment_name}} - {{ investment.total}}</span>
+                            <a href="#">
+                                <svg xmlns="http://www.w3.org/2000/svg" height="16" width="16" viewBox="0 0 512 512"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
+                                    <path fill="#ffffff" d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM175 175c9.4-9.4 24.6-9.4 33.9 0l47 47 47-47c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9l-47 47 47 47c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0l-47-47-47 47c-9.4 9.4-24.6 9.4-33.9 0s-9.4-24.6 0-33.9l47-47-47-47c-9.4-9.4-9.4-24.6 0-33.9z"/>
+                                </svg>
+                            </a>
+                        </span>
+                        
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+
+
+{% endblock content %}

@@ -9,4 +9,5 @@ urlpatterns = [
     # local apps
     path("", TemplateView.as_view(template_name="home.html"), name="home"),
     path("accounts/", include("users.urls")),
+    path("budget/", include("budget.urls")),
 ]
