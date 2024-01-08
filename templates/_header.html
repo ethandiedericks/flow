@@ -1,0 +1,45 @@
+{% load static %}
+
+  <div class="container header-container text-bg-light mt-4" style="z-index: 1;">
+    <nav class="navbar navbar-expand-md ">
+      <div class="container" >
+        <a class="navbar-brand" href="{% url 'home' %}">
+          <img src="{% static 'images/flow.png' %}" style="height: 50px; width: auto;" alt="Flow logo">
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse"  id="navbarNavDropdown">
+          <ul class="navbar-nav mx-auto" >
+            <li class="nav-item ">
+              <a class="nav-link"href="#">Dashboard</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'budget' %}">Budget</a>
+            </li>
+            <!-- Add other relevant business sections -->
+          </ul>
+          <ul class="navbar-nav">
+            {% if user.is_authenticated %}
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle semi-bold" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  {{ user.email }}
+                </a>
+                <ul class="dropdown-menu dropdown-menu-end">
+                  <li><a class="dropdown-item" href="{% url 'logout' %}">Logout</a></li>
+                </ul>
+              </li>
+            {% else %}
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'login' %}">Log In</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'signup' %}">Sign Up</a>
+              </li>
+            {% endif %}
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </div>
+  
