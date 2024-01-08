@@ -1,5 +1,4 @@
 from django import forms
-
 from .models import Transaction
 
 
@@ -12,3 +11,6 @@ class TransactionForm(forms.ModelForm):
             "transaction_amount",
             "future_transaction_date",
         ]
+        widgets = {
+            "future_transaction_date": forms.DateInput(attrs={"type": "date"}),
+        }

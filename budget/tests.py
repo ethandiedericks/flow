@@ -1,68 +1,47 @@
-from django.test import TestCase
 from django.contrib.auth import get_user_model
-from .models import (
-    Income,
-    Expense,
-    Investment,
-    IncomeSource,
-    ExpenseSource,
-    InvestmentSource,
-)
-
-User = get_user_model()
+from django.test import TestCase
+from .models import Transaction
 
 
-class TestModels(TestCase):
+class TransactionModelTest(TestCase):
     @classmethod
-    def setUpClass(cls):
-        super().setUpClass()
-        cls.user = User.objects.create_user(
+    def setUpTestData(cls):
+        # Create a user for testing
+        cls.user = get_user_model().objects.create_user(
             email="testuser@email.com", password="testpassword"
         )
 
-    @classmethod
-    def tearDownClass(cls):
-        super().tearDownClass()
-        cls.user.delete()
-
-    @classmethod
-    def create_income_source(cls):
-        return IncomeSource.objects.create(user=cls.user, name="Salary")
-
-    @classmethod
-    def create_expense_source(cls):
-        return ExpenseSource.objects.create(user=cls.user, name="Rent")
-
-    @classmethod
-    def create_investment_source(cls):
-        return InvestmentSource.objects.create(user=cls.user, name="Stocks")
-
-    def test_income_creation(self):
-        income_source = self.create_income_source()
-        income = Income.objects.create(
-            user=self.user, amount=1000, source=income_source
+        # Create a transaction for testing
+        cls.transaction = Transaction.objects.create(
+            user=cls.user,
+            transaction_type="Income",
+            transaction_name="Test Income",
+            transaction_amount=100,
+            future_transaction_date="2024-01-08",
         )
 
-        self.assertEqual(income.amount, 1000)
-        self.assertEqual(income.user, self.user)
-        self.assertEqual(income.source, income_source)
+    def test_transaction_creation(self):
+        self.assertEqual(self.transaction.transaction_type, "Income")
+        self.assertEqual(self.transaction.transaction_name, "Test Income")
+        self.assertEqual(self.transaction.transaction_amount, 100)
+        self.assertEqual(str(self.transaction), "Test Income - 100")
 
-    def test_expense_creation(self):
-        expense_source = self.create_expense_source()
-        expense = Expense.objects.create(
-            user=self.user, amount=500, source=expense_source
-        )
+    def test_transaction_date_defaults(self):
+        self.assertIsNotNone(self.transaction.date_created)
+        self.assertIsNotNone(self.transaction.date_modified)
 
-        self.assertEqual(expense.amount, 500)
-        self.assertEqual(expense.user, self.user)
-        self.assertEqual(expense.source, expense_source)
+    def test_future_transaction_date(self):
+        self.assertIsNotNone(self.transaction.future_transaction_date)
 
-    def test_investment_creation(self):
-        investment_source = self.create_investment_source()
-        investment = Investment.objects.create(
-            user=self.user, amount=2000, source=investment_source
-        )
+    def test_transaction_amount_decimal_places(self):
+        decimal_places = self.transaction._meta.get_field(
+            "transaction_amount"
+        ).decimal_places
+        self.assertEqual(decimal_places, 2)
 
-        self.assertEqual(investment.amount, 2000)
-        self.assertEqual(investment.user, self.user)
-        self.assertEqual(investment.source, investment_source)
+    def test_transaction_choices(self):
+        choices = dict(self.transaction.TRANSACTION_CHOICES)
+        self.assertIn(self.transaction.transaction_type, choices.values())
+
+    def test_transaction_user_relationship(self):
+        self.assertEqual(self.transaction.user.email, "testuser@email.com")
