@@ -2,7 +2,6 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.db.models import Sum
 from django.views import View
 
-
 from .models import Transaction
 from .forms import TransactionForm
 
