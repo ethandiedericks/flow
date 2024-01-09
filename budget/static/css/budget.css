@@ -4,85 +4,114 @@
     --red: #dc3545;
     --blue: #007bff;
   }
-
-/* Media Queries */
-@media (min-width: 992px) {
+  
+  /* Media Queries */
+  @media (min-width: 992px) {
     .custom-container {
-        width: 500px;
-        margin: 0 auto;
+      width: 500px;
+      margin: 0 auto;
     }
-}
+  }
+  
 
-/* Containers */
-.budget-container{
+  /* Select Styling */
+  select:focus{
+    border-color: var(--green) !important; 
+    box-shadow: 0 0 0 0.2rem rgba(0, 166, 126, 0.25) !important; 
+  }
+
+
+  /* Containers */
+  .budget-container {
     padding: 20px;
-}
-
-.inc-container,
-.exp-container,
-.invest-container{
+  }
+  
+  .transaction-container {
     padding: 30px;
     border-radius: 10px;
-}
+  }
+  
+  .transaction-container { background: linear-gradient(45deg, #bbe4ba, #ffffff); }
+  
+  .badge-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 5px;
+  }
 
-.inc-container { background: linear-gradient(45deg, #bbe4ba, #ffffff); }
-.exp-container { background: linear-gradient(45deg, #e6a7ad, #ffffff); }
-.invest-container { background: linear-gradient(45deg, #a5c8ff, #ffffff); }
 
-/* Buttons */
-.btn-custom {
+  /* Buttons */
+  .btn-custom {
     color: #fff;
     background-color: var(--green);
     border-color: var(--green);
-}
-
-.btn-custom:hover,
-.btn-custom:focus,
-.btn-custom:active {
+  }
+  
+  .btn-custom:hover,
+  .btn-custom:focus,
+  .btn-custom:active {
     background-color: #218838;
     border-color: var(--green);
     color: #fff;
-}
+  }
+  
 
-/* Form Controls */
-.expense-form .form-control:focus {
-    border-color: var(--red) !important;
-    box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.25) !important;
-}
-
-.expense-form .form-control:not(:focus) 
-.investment-form .form-control:not(:focus){
-    border-color: #ced4da;
-    box-shadow: none; 
-}
-
-.investment-form .form-control:focus {
-    border-color: var(--blue) !important;
-    box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102,175,233,.6) !important;
-}
-
-
-/* Delete Item Hover Effect */
-.delete-item:hover {
-    cursor: pointer;
-    background-color: lightcoral;
-}
-
-/* Typography */
-.budget-container h1,
-.budget-container h2,
-.budget-container h3,
-.budget-container h4,
-.budget-container h5 {
+  /* Typography */
+  .budget-container h1,
+  .budget-container h2,
+  .budget-container h3,
+  .budget-container h4,
+  .budget-container h5 {
     font-weight: bold;
     color: #333;
+  }
+  
+  .budget-head h1 {
+    color: #333333;
+  }
+  
+
+  /* Badges */
+  .badge {
+    display: inline-flex;
+    background-image: linear-gradient(to right, var(--green), #218838);
+    padding: 5px 10px;
+    border-radius: 20px;
+    margin-bottom: 5px;
+  }
+
+  .income-badge{
+    background-image: linear-gradient(to right, #28a745, #218838);
+  }
+
+  .expense-badge{
+    background-image: linear-gradient(to right, #dc3545, #ff073a);
+  }
+
+  .investment-badge{
+    background-image: linear-gradient(to right, #007bff, #6610f2)
+  }
+  
+  .badge-btn{
+    background-color: transparent; border: none;
+  }
+
+  .legend {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
 }
 
-.budget-head h1{
-    color : #333333;
-}
+  .legend-item {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      display: inline-block;
+      margin-right: 5px;
+  }
 
-/* Badges */
-.inc-badge{
-    background: var(--green);
-}
+  .legend-text {
+      margin-right: 20px;
+  }
