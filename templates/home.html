@@ -5,7 +5,8 @@
 {% endblock title %}
 
 {% block content %}
-    <h1>This is our home page.</h1> 
+    <div class="container">
+        <h1>This is our home page.</h1> 
         {% if user.is_authenticated %}
             <p>Hi {{ user.email }}!</p>
             <form method="post" action="{% url 'logout' %}">
@@ -17,4 +18,5 @@
             <p>You are not logged in</p>
             <a href="{% url 'login' %}">Log In</a> 
         {% endif %}
+    </div>
 {% endblock content %}

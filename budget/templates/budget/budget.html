@@ -12,85 +12,98 @@
     <header class="budget-head mt-2">
         <div class="container text-center ">
             <h1 class="display-4 ">Manage Your Finances</h1>
-            <p>Input your incomes, expenses and investments</p>
+            <p class="lead">Efficiently track and control your finances with ease.</p>
         </div>
     </header>
-
     <main>
-        <div class="row justify-content-center">
-            <div class="col-md-4 mt-3 ">
-                <div class="transaction-container shadow">
-                    <h2>Create Transaction</h2>
-                    <hr>
-                    <form method="post">
-                        {% csrf_token %}
-                        {{ form | crispy }}
-                        <button class="btn btn-custom" type="submit">Add transaction</button>
-                    </form>
-                    <hr>
-                    <h5>Total Income: {{ income_total }}</h5>
-                    <h5>Total Expenses: {{ expense_total }}</h5>
-                    <h5>Total Investments: {{ investment_total }}</h5>
+        <div class="row">
+            <div class="col-md-6 mt-4">
+                <div class="row justify-content-center">
+                    <div class="col-md-8 mt-3 ">
+                        <div class="transaction-container shadow">
+                            <h2>Create Transaction</h2>
+                            <hr>
+                            <form method="post">
+                                {% csrf_token %}
+                                {{ form | crispy }}
+                                <button class="btn btn-custom" type="submit">Add transaction</button>
+                            </form>
+                            
+                            {% if transactions%}
+                                <hr>
+                                <p>Total Income: <strong>{{ income_total }}</strong></p>
+                                <p>Total Expenses: <strong>{{ expense_total }}</strong></p>
+                                <p>Total Investments: <strong>{{ investment_total }}</strong></p>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                <div class="row justify-content-center">
+                    <div class="col-md-8 mt-3 badge-container">
+                        {% if transactions %}
+                            <!-- Legend for transaction types -->
+                            <div class="legend">
+                                <span class="legend-item" style="background-color: #28a745;"></span>
+                                <span class="legend-text">Incomes</span>
+                                <span class="legend-item" style="background-color: #dc3545;"></span>
+                                <span class="legend-text">Expenses</span>
+                                <span class="legend-item" style="background-color: #007bff;"></span>
+                                <span class="legend-text">Investments</span>
+                            </div>
+                        {% endif %}
+        
+                        {% for transaction in transactions %}
+                            <!-- Display transactions by their types -->
+                            {% if transaction.transaction_type == 'income' %}
+                                <span class="badge income-badge d-flex p-2 align-items-center rounded-pill">
+                                    <span class="px-1">{{transaction.transaction_name}} - {{ transaction.transaction_amount}}</span>
+                                    <form  method="post" action="{% url 'delete_transaction' transaction.id %}">
+                                        {% csrf_token %}
+                                        <button class="badge-btn">
+                                            <svg xmlns="http://www.w3.org/2000/svg" height="16" width="16" viewBox="0 0 512 512"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free-->
+                                                <path fill="#ffffff" d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM175 175c9.4-9.4 24.6-9.4 33.9 0l47 47 47-47c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9l-47 47 47 47c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0l-47-47-47 47c-9.4 9.4-24.6 9.4-33.9 0s-9.4-24.6 0-33.9l47-47-47-47c-9.4-9.4-9.4-24.6 0-33.9z"/>
+                                            </svg>
+                                        </button>
+                                    </form>
+                                </span>
+                            {% elif transaction.transaction_type == 'expense' %}
+                                <span class="badge expense-badge d-flex p-2 align-items-center rounded-pill">
+                                    <span class="px-1">{{transaction.transaction_name}} - {{ transaction.transaction_amount}}</span>
+                                    <form  method="post" action="{% url 'delete_transaction' transaction.id %}">
+                                        {% csrf_token %}
+                                        <button class="badge-btn">
+                                            <svg xmlns="http://www.w3.org/2000/svg" height="16" width="16" viewBox="0 0 512 512"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free-->
+                                                <path fill="#ffffff" d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM175 175c9.4-9.4 24.6-9.4 33.9 0l47 47 47-47c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9l-47 47 47 47c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0l-47-47-47 47c-9.4 9.4-24.6 9.4-33.9 0s-9.4-24.6 0-33.9l47-47-47-47c-9.4-9.4-9.4-24.6 0-33.9z"/>
+                                            </svg>
+                                        </button>
+                                    </form>
+                                </span>
+                            {% else %}
+                                <span class="badge investment-badge d-flex p-2 align-items-center rounded-pill">
+                                    <span class="px-1">{{transaction.transaction_name}} - {{ transaction.transaction_amount}}</span>
+                                    <form  method="post" action="{% url 'delete_transaction' transaction.id %}">
+                                        {% csrf_token %}
+                                        <button class="badge-btn">
+                                            <svg xmlns="http://www.w3.org/2000/svg" height="16" width="16" viewBox="0 0 512 512"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free-->
+                                                <path fill="#ffffff" d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM175 175c9.4-9.4 24.6-9.4 33.9 0l47 47 47-47c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9l-47 47 47 47c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0l-47-47-47 47c-9.4 9.4-24.6 9.4-33.9 0s-9.4-24.6 0-33.9l47-47-47-47c-9.4-9.4-9.4-24.6 0-33.9z"/>
+                                            </svg>
+                                        </button>
+                                    </form>
+                                </span>
+                            {% endif %}
+                        {% endfor %}
+                   
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="row justify-content-center">
-            <div class="col-md-4 mt-3 badge-container">
-                {% if transactions %}
-                    <!-- Legend for transaction types -->
-                    <div class="legend">
-                        <span class="legend-item" style="background-color: #28a745;"></span>
-                        <span class="legend-text">Incomes</span>
-                        <span class="legend-item" style="background-color: #dc3545;"></span>
-                        <span class="legend-text">Expenses</span>
-                        <span class="legend-item" style="background-color: #007bff;"></span>
-                        <span class="legend-text">Investments</span>
-                    </div>
-                {% endif %}
-
-                {% for transaction in transactions %}
-                    <!-- Display transactions by their types -->
-                    {% if transaction.transaction_type == 'income' %}
-                        <span class="badge income-badge d-flex p-2 align-items-center rounded-pill">
-                            <span class="px-1">{{transaction.transaction_name}} - {{ transaction.transaction_amount}}</span>
-                            <form  method="post" action="{% url 'delete_transaction' transaction.id %}">
-                                {% csrf_token %}
-                                <button class="badge-btn">
-                                    <svg xmlns="http://www.w3.org/2000/svg" height="16" width="16" viewBox="0 0 512 512"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free-->
-                                        <path fill="#ffffff" d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM175 175c9.4-9.4 24.6-9.4 33.9 0l47 47 47-47c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9l-47 47 47 47c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0l-47-47-47 47c-9.4 9.4-24.6 9.4-33.9 0s-9.4-24.6 0-33.9l47-47-47-47c-9.4-9.4-9.4-24.6 0-33.9z"/>
-                                    </svg>
-                                </button>
-                            </form>
-                        </span>
-                    {% elif transaction.transaction_type == 'expense' %}
-                        <span class="badge expense-badge d-flex p-2 align-items-center rounded-pill">
-                            <span class="px-1">{{transaction.transaction_name}} - {{ transaction.transaction_amount}}</span>
-                            <form  method="post" action="{% url 'delete_transaction' transaction.id %}">
-                                {% csrf_token %}
-                                <button class="badge-btn">
-                                    <svg xmlns="http://www.w3.org/2000/svg" height="16" width="16" viewBox="0 0 512 512"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free-->
-                                        <path fill="#ffffff" d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM175 175c9.4-9.4 24.6-9.4 33.9 0l47 47 47-47c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9l-47 47 47 47c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0l-47-47-47 47c-9.4 9.4-24.6 9.4-33.9 0s-9.4-24.6 0-33.9l47-47-47-47c-9.4-9.4-9.4-24.6 0-33.9z"/>
-                                    </svg>
-                                </button>
-                            </form>
-                        </span>
-                    {% else %}
-                        <span class="badge investment-badge d-flex p-2 align-items-center rounded-pill">
-                            <span class="px-1">{{transaction.transaction_name}} - {{ transaction.transaction_amount}}</span>
-                            <form  method="post" action="{% url 'delete_transaction' transaction.id %}">
-                                {% csrf_token %}
-                                <button class="badge-btn">
-                                    <svg xmlns="http://www.w3.org/2000/svg" height="16" width="16" viewBox="0 0 512 512"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free-->
-                                        <path fill="#ffffff" d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM175 175c9.4-9.4 24.6-9.4 33.9 0l47 47 47-47c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9l-47 47 47 47c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0l-47-47-47 47c-9.4 9.4-24.6 9.4-33.9 0s-9.4-24.6 0-33.9l47-47-47-47c-9.4-9.4-9.4-24.6 0-33.9z"/>
-                                    </svg>
-                                </button>
-                            </form>
-                        </span>
-                    {% endif %}
-                {% endfor %}
-           
+            <div class="col-md-6 column d-none d-md-flex">
+                <img src="{% static 'budget/images/budget2.svg' %}" alt="" style="height: 350px; width: auto;">
             </div>
         </div>
+    </main>
+
+    <main>
+        
     </main>
 </div>
 
