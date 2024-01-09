@@ -1,3 +1,5 @@
+![Budget Page Image](https://raw.githubusercontent.com/ethandiedericks/flow/main/budget-page-image.png)
+
 # Flow Finance
 
 Flow Finance is a Django-based financial management system that allows users to track their income, expenses, and investments through a structured database model.
