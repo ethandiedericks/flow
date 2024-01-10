@@ -1,4 +1,4 @@
-![Budget Page Image](https://raw.githubusercontent.com/ethandiedericks/flow/main/budget-page-image.png)
+![Budget Page Image](https://raw.githubusercontent.com/ethandiedericks/flow/main/budget-page-readme-image.png)
 
 # Flow Finance
 
