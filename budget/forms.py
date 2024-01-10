@@ -1,5 +1,8 @@
 import re
+
 from django import forms
+from django.utils.timezone import now
+
 from .models import Transaction
 
 
@@ -23,17 +26,29 @@ class TransactionForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        # Add 'error' CSS class to fields with errors
 
     def clean(self):
         cleaned_data = super().clean()
+        # get data
         transaction_name = cleaned_data.get("transaction_name")
         transaction_amount = cleaned_data.get("transaction_amount")
+        future_transaction_date = cleaned_data.get("future_transaction_date")
+
+        # check if transaction_name contains digits
         if transaction_name is not None and re.search(r"\d", transaction_name):
             self.add_error("transaction_name", "Transaction name can't contain numbers")
+        # check if transaction_amount is less than or equal to zero
         if transaction_amount is not None and transaction_amount <= 0:
             self.add_error(
                 "transaction_amount", "Transaction amount must be greater than 0"
             )
+        # checks if chosen date is in the future
+        if future_transaction_date:
+            today = now().date()
+            if future_transaction_date <= today:
+                self.add_error(
+                    "future_transaction_date",
+                    "Transaction date should be in the future",
+                )
 
         return cleaned_data
