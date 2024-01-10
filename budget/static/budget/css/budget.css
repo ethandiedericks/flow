@@ -4,17 +4,9 @@
     --red: #dc3545;
     --blue: #007bff;
   }
-  
-  /* Media Queries */
-  @media (min-width: 992px) {
-    .custom-container {
-      width: 500px;
-      margin: 0 auto;
-    }
-  }
-  
 
-  /* Select Styling */
+
+  /* General Styling */
   body {
 
     background-color: #ffffff;
@@ -31,6 +23,20 @@
     box-shadow: 0 0 0 0.2rem rgba(0, 166, 126, 0.25) !important; 
   }
 
+  
+  /* Rows and Columns */
+  .row{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .column {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 80vh;
+  }
 
   /* Containers */
   .budget-container {
@@ -127,9 +133,17 @@
       margin-right: 20px;
   }
 
-  .column {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 80vh; /* You may adjust this based on your layout */
-  }
+
+    /* Media Queries */
+    @media (min-width: 992px) {
+      .custom-container {
+        width: 500px;
+        margin: 0 auto;
+      }
+    }
+    @media (min-width: 800px){
+      .budget-svg{
+        height:280px;
+        width: auto;
+      }
+    }
