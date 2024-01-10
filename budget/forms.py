@@ -13,11 +13,12 @@ class TransactionForm(forms.ModelForm):
             "future_transaction_date",
         ]
         widgets = {
-            "future_transaction_date": forms.DateInput(attrs={"type": "date"}),
-            "transaction_amount": forms.NumberInput(
-                attrs={"autocomplete": "transaction-amount"}
-            ),
             "transaction_type": forms.Select(attrs={"autofocus": True}),
+            "transaction_name": forms.TextInput(attrs={"placeholder": "Salary"}),
+            "transaction_amount": forms.NumberInput(
+                attrs={"autocomplete": "transaction-amount", "placeholder": "24950.50"}
+            ),
+            "future_transaction_date": forms.DateInput(attrs={"type": "date"}),
         }
 
     def __init__(self, *args, **kwargs):
