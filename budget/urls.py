@@ -1,11 +1,13 @@
+# budget/urls.py
 from django.urls import path
-from . import views
+from .views import TransactionView, DeleteTransactionView, GetTotalsView
 
 urlpatterns = [
-    path("", views.TransactionView.as_view(), name="budget"),
+    path("", TransactionView.as_view(), name="budget"),
     path(
         "delete_transaction/<uuid:id>/",
-        views.DeleteTransactionView.as_view(),
+        DeleteTransactionView.as_view(),
         name="delete_transaction",
     ),
+    path("get_totals/", GetTotalsView.as_view(), name="get_totals"),
 ]

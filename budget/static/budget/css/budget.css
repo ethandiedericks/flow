@@ -7,8 +7,7 @@
 
 
   /* General Styling */
-  body {
-
+  .budget-page {
     background-color: #ffffff;
     background-image: url('../images/background2.jpg');
     background-size: cover;
@@ -129,6 +128,18 @@
       margin-right: 5px;
   }
 
+  .income-legend-item{
+    background-color: #28a745;
+  }
+
+  .expense-legend-item{
+    background-color: #dc3545;
+  }
+
+  .investment-legend-item{
+    background-color: #007bff;
+  }
+
   .legend-text {
       margin-right: 20px;
   }
@@ -141,7 +152,7 @@
         margin: 0 auto;
       }
     }
-    @media (min-width: 800px){
+    @media (max-width: 800px){
       .budget-svg{
         height:280px;
         width: auto;

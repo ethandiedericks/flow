@@ -1,10 +1,10 @@
 {% load static %}
 
-  <div class="container header-container text-bg-light mt-3" style="z-index: 1;">
+  <div class="container header-container text-bg-light mt-3">
     <nav class="navbar navbar-expand-md ">
       <div class="container" >
         <a class="navbar-brand" href="{% url 'home' %}">
-          <img src="{% static 'images/flow.png' %}" style="height: 50px; width: auto;" alt="Flow logo">
+          <img class="logo" src="{% static 'images/flow.png' %}" alt="logo" width="auto" height="50">
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
@@ -26,9 +26,14 @@
                   {{ user.email }}
                 </a>
                 <ul class="dropdown-menu dropdown-menu-end">
-                  <li><a class="dropdown-item" href="{% url 'logout' %}">Logout</a></li>
+                  <li >
+                    <form action="{% url 'logout' %}" method="post">
+                      {% csrf_token %}
+                      <button class="dropdown-item" type="submit">Logout</button>
+                    </form>
+                  </li>
                 </ul>
-              </li>
+            </li>
             {% else %}
               <li class="nav-item">
                 <a class="nav-link" href="{% url 'login' %}">Log In</a>
