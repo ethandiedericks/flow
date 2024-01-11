@@ -44,9 +44,11 @@ INSTALLED_APPS = [
     # 3rd Party
     "crispy_forms",
     "crispy_bootstrap5",
+    "rest_framework",
     # Local
     "users.apps.UsersConfig",
     "budget.apps.BudgetConfig",
+    "dashboard.apps.DashboardConfig",
 ]
 AUTH_USER_MODEL = "users.CustomUser"
 
