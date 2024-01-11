@@ -1,6 +1,25 @@
 import uuid
 from django.db import models
 from django.contrib.auth import get_user_model
+from django.db.models import Sum
+
+
+class TransactionManager(models.Manager):
+    def get_totals(self, user):
+        return {
+            "income_total": self.filter(user=user, transaction_type="income").aggregate(
+                Sum("transaction_amount")
+            )["transaction_amount__sum"]
+            or 0,
+            "expense_total": self.filter(
+                user=user, transaction_type="expense"
+            ).aggregate(Sum("transaction_amount"))["transaction_amount__sum"]
+            or 0,
+            "investment_total": self.filter(
+                user=user, transaction_type="investment"
+            ).aggregate(Sum("transaction_amount"))["transaction_amount__sum"]
+            or 0,
+        }
 
 
 class Transaction(models.Model):
@@ -28,6 +47,8 @@ class Transaction(models.Model):
     future_transaction_date = models.DateField(
         "Future transaction date", blank=True, null=True
     )
+
+    objects = TransactionManager()
 
     def __str__(self):
         return f"{self.transaction_name} - {self.transaction_amount}"

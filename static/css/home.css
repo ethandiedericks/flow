@@ -1,0 +1,7 @@
+#hero{
+    /* <a href="https://www.freepik.com/free-vector/stock-market-forex-trading-concept_13304663.htm#query=green%20finance%20background&position=19&from_view=search&track=ais&uuid=133bd2e6-f668-49aa-b789-e508d8241d6e">Image by starline</a> on Freepik */
+    background-image: url("../images/SL-022321-41020-01.jpg"); 
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}

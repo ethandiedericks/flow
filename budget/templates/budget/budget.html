@@ -7,6 +7,10 @@
     Budget
 {% endblock title %}
 
+{% block body_class %}
+    class="budget-page"
+{% endblock body_class %}
+
 {% block content %}
 <div class="container budget-container">
     <header class="budget-head mt-2">
@@ -24,17 +28,27 @@
                             <h2>Create Transaction</h2>
                             <hr>
                             <form method="post">
+                                {% if messages %}
+                                    {% for message in messages %}
+                                        <div class="alert alert-success mt-3" role="alert">
+                                            {{ message }}
+                                        </div>
+                                    {% endfor %}
+                                {% endif %}
                                 {% csrf_token %}
                                 {{ form | crispy }}
                                 <button class="btn btn-custom" type="submit">Add transaction</button>
                             </form>
+                            <div class="totals-container">
+                                <!-- if theres transactions, display the totals -->
+                                {% if transactions%}
+                                    <hr>
+                                    <p>Total Income: <strong class="income-total">{{ income_total }}</strong></p>
+                                    <p>Total Expenses: <strong class="expense-total">{{ expense_total }}</strong></p>
+                                    <p>Total Investments: <strong class="investment-total">{{ investment_total }}</strong></p>
+                                {% endif %}
+                            </div>
                             
-                            {% if transactions%}
-                                <hr>
-                                <p>Total Income: <strong>{{ income_total }}</strong></p>
-                                <p>Total Expenses: <strong>{{ expense_total }}</strong></p>
-                                <p>Total Investments: <strong>{{ investment_total }}</strong></p>
-                            {% endif %}
                         </div>
                     </div>
                 </div>
@@ -43,11 +57,11 @@
                         {% if transactions %}
                             <!-- Legend for transaction types -->
                             <div class="legend">
-                                <span class="legend-item" style="background-color: #28a745;"></span>
+                                <span class="legend-item income-legend-item"></span>
                                 <span class="legend-text">Incomes</span>
-                                <span class="legend-item" style="background-color: #dc3545;"></span>
+                                <span class="legend-item expense-legend-item"></span>
                                 <span class="legend-text">Expenses</span>
-                                <span class="legend-item" style="background-color: #007bff;"></span>
+                                <span class="legend-item investment-legend-item"></span>
                                 <span class="legend-text">Investments</span>
                             </div>
                         {% endif %}
@@ -59,7 +73,7 @@
                                     <span class="px-1">{{transaction.transaction_name}} - {{ transaction.transaction_amount}}</span>
                                     <form  method="post" action="{% url 'delete_transaction' transaction.id %}">
                                         {% csrf_token %}
-                                        <button class="badge-btn">
+                                        <button class="badge-btn" data-transaction-id="{{ transaction.id }}">
                                             <svg xmlns="http://www.w3.org/2000/svg" height="16" width="16" viewBox="0 0 512 512"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free-->
                                                 <path fill="#ffffff" d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM175 175c9.4-9.4 24.6-9.4 33.9 0l47 47 47-47c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9l-47 47 47 47c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0l-47-47-47 47c-9.4 9.4-24.6 9.4-33.9 0s-9.4-24.6 0-33.9l47-47-47-47c-9.4-9.4-9.4-24.6 0-33.9z"/>
                                             </svg>
@@ -71,7 +85,7 @@
                                     <span class="px-1">{{transaction.transaction_name}} - {{ transaction.transaction_amount}}</span>
                                     <form  method="post" action="{% url 'delete_transaction' transaction.id %}">
                                         {% csrf_token %}
-                                        <button class="badge-btn">
+                                        <button class="badge-btn" data-transaction-id="{{ transaction.id }}">
                                             <svg xmlns="http://www.w3.org/2000/svg" height="16" width="16" viewBox="0 0 512 512"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free-->
                                                 <path fill="#ffffff" d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM175 175c9.4-9.4 24.6-9.4 33.9 0l47 47 47-47c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9l-47 47 47 47c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0l-47-47-47 47c-9.4 9.4-24.6 9.4-33.9 0s-9.4-24.6 0-33.9l47-47-47-47c-9.4-9.4-9.4-24.6 0-33.9z"/>
                                             </svg>
@@ -83,7 +97,7 @@
                                     <span class="px-1">{{transaction.transaction_name}} - {{ transaction.transaction_amount}}</span>
                                     <form  method="post" action="{% url 'delete_transaction' transaction.id %}">
                                         {% csrf_token %}
-                                        <button class="badge-btn">
+                                        <button class="badge-btn" data-transaction-id="{{ transaction.id }}">
                                             <svg xmlns="http://www.w3.org/2000/svg" height="16" width="16" viewBox="0 0 512 512"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free-->
                                                 <path fill="#ffffff" d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM175 175c9.4-9.4 24.6-9.4 33.9 0l47 47 47-47c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9l-47 47 47 47c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0l-47-47-47 47c-9.4 9.4-24.6 9.4-33.9 0s-9.4-24.6 0-33.9l47-47-47-47c-9.4-9.4-9.4-24.6 0-33.9z"/>
                                             </svg>
@@ -97,15 +111,61 @@
                 </div>
             </div>
             <div class="col-md-6 column d-none d-md-flex"> 
-                <img src="{% static 'budget/images/budget2.svg' %}" alt="budget svg" class="budget-svg" style="height: 350px; width: auto;">
+                <img src="{% static 'budget/images/budget2.svg' %}" alt="budget svg" class="budget-svg" height="350px" width="auto">
             </div>
         </div>
     </main>
 
-    <main>
-        
-    </main>
 </div>
+<script>
+    
+    $(document).ready(function() {
+        $('.badge-btn').click(function(event) {
+            event.preventDefault();
+
+            var transactionId = $(this).data('transaction-id');
+            var badgeContainer = $(this).closest('.badge-container');
+            var totalsContainer = $('.totals-container'); 
+            var legendContainer = $('.legend');
+
+            $.ajax({
+                type: 'POST',
+                url: 'delete_transaction/' + transactionId + '/',
+                data: {
+                    csrfmiddlewaretoken: '{{ csrf_token }}',
+                },
+                success: function(response) {
+                    if (response.message === 'Transaction deleted successfully') {
+                        $('[data-transaction-id="' + transactionId + '"]').closest('.badge').remove();
+
+                        // Fetch updated totals from the server
+                        $.get('get_totals/', function(updatedTotals) {
+                            // Update the HTML with the new totals
+                            totalsContainer.find('.income-total').text(updatedTotals.income_total);
+                            totalsContainer.find('.expense-total').text(updatedTotals.expense_total);
+                            totalsContainer.find('.investment-total').text(updatedTotals.investment_total);
+
+                            if (updatedTotals.income_total === 0 && updatedTotals.expense_total === 0 && updatedTotals.investment_total === 0) {
+                                legendContainer.remove();
+                                totalsContainer.remove();
+                            }
+                        });
+                    } else {
+                        console.error('Error:', response.message);
+                    }
+                },
+                error: function() {
+                    console.error('AJAX error');
+                },
+            });
+        });
+    });
+</script>
+
+
+
+
+
 
 
 {% endblock content %}

@@ -1,12 +1,14 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from django.db.models import Sum
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views import View
+from django.http import JsonResponse
+
 
 from .models import Transaction
 from .forms import TransactionForm
 
 
-class TransactionView(View):
+class TransactionView(LoginRequiredMixin, View):
     template_name = "budget/budget.html"
 
     def get(self, request):
@@ -14,32 +16,11 @@ class TransactionView(View):
         transactions = Transaction.objects.filter(user=request.user).order_by(
             "transaction_type"
         )
-        income_total = (
-            transactions.filter(transaction_type="income").aggregate(
-                Sum("transaction_amount")
-            )["transaction_amount__sum"]
-            or 0
-        )
-
-        expense_total = (
-            transactions.filter(transaction_type="expense").aggregate(
-                Sum("transaction_amount")
-            )["transaction_amount__sum"]
-            or 0
-        )
-
-        investment_total = (
-            transactions.filter(transaction_type="investment").aggregate(
-                Sum("transaction_amount")
-            )["transaction_amount__sum"]
-            or 0
-        )
+        totals = Transaction.objects.get_totals(request.user)
         context = {
             "form": form,
             "transactions": transactions,
-            "income_total": income_total,
-            "expense_total": expense_total,
-            "investment_total": investment_total,
+            **totals,
         }
         return render(request, self.template_name, context)
 
@@ -60,10 +41,25 @@ class TransactionView(View):
             return render(request, self.template_name, context)
 
 
-class DeleteTransactionView(View):
+class DeleteTransactionView(LoginRequiredMixin, View):
     def post(self, request, id):
-        transaction = get_object_or_404(Transaction, pk=id, user=request.user)
+        if request.method == "POST":
+            transaction = get_object_or_404(Transaction, pk=id, user=request.user)
 
-        if transaction.user == request.user:
-            transaction.delete()
-        return redirect("budget")
+            if transaction.user == request.user:
+                transaction.delete()
+                return JsonResponse({"message": "Transaction deleted successfully"})
+            else:
+                return JsonResponse(
+                    {"message": "Transaction does not belong to the current user"},
+                    status=403,
+                )
+        else:
+            return JsonResponse({"message": "Invalid request method"}, status=405)
+
+
+class GetTotalsView(LoginRequiredMixin, View):
+    def get(self, request):
+        updated_totals = Transaction.objects.get_totals(request.user)
+
+        return JsonResponse(updated_totals)

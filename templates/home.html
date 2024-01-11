@@ -4,19 +4,67 @@
     Home
 {% endblock title %}
 
+{% block body_class %}
+    class="home-page"
+{% endblock body_class %}
+
 {% block content %}
-    <div class="container">
-        <h1>This is our home page.</h1> 
-        {% if user.is_authenticated %}
-            <p>Hi {{ user.email }}!</p>
-            <form method="post" action="{% url 'logout' %}">
-                {% csrf_token %}
-                <button class="btn btn-primary" type="submit">Log Out</button>
-            </form>
-            
-        {% else %}
-            <p>You are not logged in</p>
-            <a href="{% url 'login' %}">Log In</a> 
-        {% endif %}
+<main class="container mt-4">
+    <section id="hero" class="py-5 text-white text-center ">
+        <div class="container">
+            <h1 class="display-4 mb-4">Welcome to Flow</h1>
+            <p class="lead">Discover a smarter way to manage your finances.</p>
+            <a href="{% url 'login' %}" class="btn btn-light btn-lg">Get Started</a>
+        </div>
+    </section>
+
+    <section id="features" class="py-5">
+        <div class="container">
+            <h2 class="text-center mb-5">Features</h2>
+            <div class="row">
+                <!-- Feature Cards -->
+                <div class="col-lg-4 mb-4">
+                    <div class="card border-0 shadow-sm h-100">
+                        <div class="card-body">
+                            <h3 class="card-title mb-3">Expense Tracking</h3>
+                            <p class="card-text">Effortlessly track your expenses and income.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 mb-4">
+                    <div class="card border-0 shadow-sm h-100">
+                        <div class="card-body">
+                            <h3 class="card-title mb-3">Financial Insights</h3>
+                            <p class="card-text">Gain valuable insights into your financial data.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 mb-4">
+                    <div class="card border-0 shadow-sm h-100">
+                        <div class="card-body">
+                            <h3 class="card-title mb-3">Budget Planning</h3>
+                            <p class="card-text">Plan and manage your budget effectively.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="about" class="py-5 bg-light">
+        <div class="container">
+            <h2 class="text-center mb-4">Our Mission</h2>
+            <p class="lead text-center">
+                At Flow, our mission is to revolutionize the way individuals engage with their finances. We're committed to providing a user-centric platform that simplifies financial management, fosters financial literacy, and encourages mindful spending and saving habits. We aim to empower our users to achieve their financial goals by offering intuitive tools, actionable insights, and personalized guidance. Our relentless focus is on creating a frictionless experience that allows everyone to navigate their financial journey with confidence and ease.
+            </p>
+        </div>
+    </section>
+
+</main>
+
+<footer class="bg-dark text-white py-4">
+    <div class="container text-center">
+        <p>© 2024 Flow. All rights reserved.</p>
     </div>
+</footer>
 {% endblock content %}
