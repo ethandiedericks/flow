@@ -1,0 +1,61 @@
+{% extends '_base.html' %}
+{% load static %}
+
+{% block title %}
+    Dashboard
+{% endblock title %}
+
+{% block body_class %}
+    class="dashboard-page"
+{% endblock body_class %}
+
+{% block content %}
+
+    <main class="container-fluid">
+        <div class="row">
+            <div class="col-md-3">
+                <aside class="dashboard-sidebar">
+                    {% include 'dashboard/_sidebar.html' %}
+                </aside>
+            </div>
+            <div class="col-md-9">
+                <div class="row">
+                    <div class="col-md-4">
+                        <!-- income card -->
+                        <div class="dashboard-card">
+                            <div class="card-body">
+                                <h5 class="card-title">Income</h5>
+                                <p class="card-text">$X,XXX</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- expenses card -->
+                    <div class="col-md-4">
+                        <div class="dashboard-card">
+                            <div class="card-body">
+                                <h5 class="card-title">Expenses</h5>
+                                <p class="card-text">$X,XXX</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- investment card -->
+                    <div class="col-md-4">
+                        <div class="dashboard-card">
+                            <div class="card-body">
+                                <h5 class="card-title">Investments</h5>
+                                <p class="card-text">$X,XXX</p>
+                            </div>
+                        </div>
+                    </div>
+                </div> <!-- closing inner row -->
+                <div class="row">
+                    
+                </div>
+            </div>
+        </div> <!-- closing outer row -->
+        
+
+      
+    </main>
+
+{% endblock content %}

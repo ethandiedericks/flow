@@ -1,9 +1,18 @@
+from django.shortcuts import render
 from django.http import JsonResponse
 from django.db.models import Sum
 from django.contrib.auth.decorators import login_required
 
 from budget.models import Transaction
 from .serializers import GroupedSerializer
+
+
+@login_required
+def dashboard(request):
+    is_dashboard_page = request.path.startswith("/dashboard/")
+    return render(
+        request, "dashboard/dashboard.html", {"is_dashboard_page": is_dashboard_page}
+    )
 
 
 @login_required
