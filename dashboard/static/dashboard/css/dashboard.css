@@ -6,20 +6,21 @@
 
 /* Sidebar */
 .sidebar {
-   
     border-radius: 20px;
-    height: 95vh;
+    height: 100vh;
+    position: sticky;
 }
 
+/* Cards */
 .dashboard-card {
-    background-color: #fff; /* Adjust for desired background color */
-    border-radius: 5px;
-    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1); /* Optional shadow effect */
-    margin-bottom: 20px;
+    background-color: #fff;
+    border-radius: 20px;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
     padding: 15px;
-    position: sticky; /* Position cards at the top */
+    position: sticky;
+    margin-bottom: 5px;
     top: 0;
-    z-index: 1; /* Ensure cards stay above other content */
+    z-index: 1;
 }
 
 .dashboard-card h5.card-title {
@@ -31,4 +32,16 @@
 .dashboard-card p.card-text {
     font-size: 14px;
     color: #666;
+}
+
+.big-chart-card,
+.small-chart-card,
+.table-card{
+    background-color: #fff;
+    border-radius: 20px;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    padding: 15px;
+    position: sticky;
+    z-index: 1;
 }
