@@ -1,28 +1,37 @@
-from django.shortcuts import render
-from django.http import JsonResponse
 from django.db.models import Sum
-from django.contrib.auth.decorators import login_required
 
 from budget.models import Transaction
 from .serializers import GroupedSerializer
+from django.http import JsonResponse
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import render
 
 
 @login_required
 def dashboard(request):
     is_dashboard_page = request.path.startswith("/dashboard/")
+    transactions = Transaction.objects.filter(user=request.user)
+
     return render(
-        request, "dashboard/dashboard.html", {"is_dashboard_page": is_dashboard_page}
+        request,
+        "dashboard/dashboard.html",
+        {
+            "is_dashboard_page": is_dashboard_page,
+            "transactions": transactions,
+        },
     )
 
 
 @login_required
 def get_grouped_data(request, transaction_type):
+    # Fetch real data from your database
     grouped_data = (
         Transaction.objects.filter(user=request.user, transaction_type=transaction_type)
         .values("transaction_name")
         .annotate(total_amount=Sum("transaction_amount"))
     )
 
+    # Serialize the data
     serialized_transactions = GroupedSerializer(grouped_data, many=True)
 
     return JsonResponse(serialized_transactions.data, safe=False)
