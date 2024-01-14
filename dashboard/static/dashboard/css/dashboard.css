@@ -1,38 +1,50 @@
 /* body */
-.dashboard-page {
+body {
     background: #f6f8fa;
     padding: 10px;
 }
 
-/* Sidebar */
-.sidebar {
-    border-radius: 20px;
-    height: 100vh;
-    position: sticky;
-}
-
-/* Cards */
+/* General card styles */
 .dashboard-card {
-    background-color: #fff;
-    border-radius: 20px;
-    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
-    padding: 15px;
-    position: sticky;
-    margin-bottom: 5px;
-    top: 0;
-    z-index: 1;
+    background-color: #f0f2f5;
+    border-radius: 10px;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.15);
+    padding: 20px;
+    margin-bottom: 20px;
+    font-family: "Open Sans", sans-serif;
+    text-align: center;
 }
 
 .dashboard-card h5.card-title {
-    font-size: 16px;
+    color: #3498db;
+    font-size: 18px;
     font-weight: 600;
-    margin-bottom: 5px;
+    margin-bottom: 10px;
 }
 
 .dashboard-card p.card-text {
-    font-size: 14px;
-    color: #666;
+    color: #444;
+    font-size: 16px;
 }
+
+/* Specific card enhancements */
+.income-card {
+    background-color: #f0f2f5;
+}
+
+.expenses-card {
+    background-color: #f0f2f5;
+}
+
+.investments-card {
+    background-color: #f0f2f5;
+}
+
+/* Optional: Hover effects */
+.dashboard-card:hover {
+    box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.25);
+}
+
 
 .big-chart-card,
 .small-chart-card,
@@ -45,3 +57,16 @@
     position: sticky;
     z-index: 1;
 }
+.big-chart-card,
+.small-chart-card{
+    height: 400px;
+}
+
+@media (max-width: 990px) {
+    .big-chart-card,
+    .small-chart-card{
+        height: auto;
+    }
+  }
+
+  

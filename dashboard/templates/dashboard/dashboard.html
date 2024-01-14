@@ -6,130 +6,102 @@
 {% endblock title %}
 
 {% block body_class %}
-    class="dashboard-page"
+    dashboard-page
 {% endblock body_class %}
 
 {% block content %}
-
-    <main class="container-fluid">
-        <div class="row">
-            <div class="col-md-3">
-                <aside class="dashboard-sidebar">
-                    {% include 'dashboard/_sidebar.html' %}
-                </aside>
-            </div>
-            <div class="col-md-9">
-                <div>
-                    <h2>Overview:</h2>
-                </div>
-                <div class="row">
-                    <div class="col-md-4">
-                        <!-- income card -->
-                        <div class="dashboard-card">
-                            <div class="card-body">
-                                <h5 class="card-title">Income</h5>
-                                <p class="card-text">$X,XXX</p>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- expenses card -->
-                    <div class="col-md-4">
-                        <div class="dashboard-card">
-                            <div class="card-body">
-                                <h5 class="card-title">Expenses</h5>
-                                <p class="card-text">$X,XXX</p>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- investment card -->
-                    <div class="col-md-4">
-                        <div class="dashboard-card">
-                            <div class="card-body">
-                                <h5 class="card-title">Investments</h5>
-                                <p class="card-text">$X,XXX</p>
-                            </div>
-                        </div>
-                    </div>
-                </div> <!-- closing inner row 1 -->
-                <div class="row">
-                    <div class="col-md-8">
-                        <!-- big chart card -->
-                        <div class="mb-2 mt-0">
-                            <div class="dropdown">
-                                <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                  Dropdown
-                                </button>
-                                <ul class="dropdown-menu">
-                                  <li><button class="dropdown-item active" type="button" aria-current="true">Action</button></li>
-                                  <li><button class="dropdown-item" type="button">Another action</button></li>
-                                  <li><button class="dropdown-item" type="button">Something else here</button></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="big-chart-card">
-                            <canvas id="bigChart" aria-label="bigChart" role="img"></canvas>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <!-- small chart card -->
-                        <div class="mb-2 mt-0">
-                            <div class="dropdown">
-                                <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                  Dropdown
-                                </button>
-                                <ul class="dropdown-menu">
-                                  <li><button class="dropdown-item active" type="button" aria-current="true" >Action</button></li>
-                                  <li><button class="dropdown-item" type="button">Another action</button></li>
-                                  <li><button class="dropdown-item" type="button">Something else here</button></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="small-chart-card">
-                            <canvas id="smallChart" aria-label="smallChart" role="img"></canvas>
-                        </div>
-                    </div>
-                </div> <!-- closing inner row 2-->
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="table-card">
-                            <table class="table table-hover table-responsive caption-top">
-                                <caption><strong>List of transactions: </strong> <i>(click to edit or delete)</i> </caption>
-                                <thead>
-                                  <tr>
-                                    <th scope="col">#</th>
-                                    <th scope="col">First</th>
-                                    <th scope="col">Last</th>
-                                    <th scope="col">Handle</th>
-                                  </tr>
-                                </thead>
-                                <tbody class="table-group-divider">
-                                  <tr>
-                                    <th scope="row">1</th>
-                                    <td>Mark</td>
-                                    <td>Otto</td>
-                                    <td>@mdo</td>
-                                  </tr>
-                                  <tr>
-                                    <th scope="row">2</th>
-                                    <td>Jacob</td>
-                                    <td>Thornton</td>
-                                    <td>@fat</td>
-                                  </tr>
-                                  <tr>
-                                    <th scope="row">3</th>
-                                    <td colspan="2">Larry the Bird</td>
-                                    <td>@twitter</td>
-                                  </tr>
-                                </tbody>
-                              </table>
+        <div class="container">
+            <div class="row mt-4">
+                <div class="col-md-4">
+                    <div class="dashboard-card income-card">
+                        <div class="card-body">
+                            <i class="fas fa-money-bill fa-3x"></i> <h5 class="card-title mt-3">Income</h5>
+                            <p class="card-text">$X,XXX</p>
                         </div>
                     </div>
                 </div>
+                <div class="col-md-4">
+                    <div class="dashboard-card expenses-card">
+                        <div class="card-body">
+                            <i class="fas fa-shopping-cart fa-3x"></i> <h5 class="card-title mt-3">Expenses</h5>
+                            <p class="card-text">$X,XXX</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="dashboard-card investments-card">
+                        <div class="card-body">
+                            <i class="fas fa-chart-pie fa-3x"></i> <h5 class="card-title mt-3">Investments</h5>
+                            <p class="card-text">$X,XXX</p>
+                        </div>
+                    </div>
+                </div>
+            </div> <!-- closing inner row 1 -->
+            <div class="row g-2">
+                <div class="col-md-8">
+                    <div class="mb-2 mt-0">
+                        <div class="dropdown">
+                            <button class="btn btn-secondary income-dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Chart Type
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li><button class="dropdown-item dropdown-tog line-dropdown-item" type="button" aria-current="true">Income, Expenses & Investments - Line</button></li>
+                                <li><button class="dropdown-item bar-dropdown-item" type="button">Income, Expenses & Investments - Bar</button></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="big-chart-card">
+                        <canvas id="bigChart" aria-label="bigChart" role="img"></canvas>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="mb-2 mt-0">
+                        <div class="dropdown">
+                            <button class="btn btn-secondary small-dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Chart Type
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li><button class="dropdown-item small-dropdown-item doughnut-dropdown-item" type="button" aria-current="true">Doughnut</button></li>
+                                <li><button class="dropdown-item small-dropdown-item pie-dropdown-item" type="button">Pie</button></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="small-chart-card">
+                        <canvas id="smallChart" aria-label="smallChart" role="img"></canvas>
+                    </div>
+                </div>
+            </div> <!-- closing inner row 2-->
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="table-card">
+                        <table class="table align-middle mb-0 bg-white table-hover table-responsive caption-top">
+                            <caption><strong>List of transactions: </strong> <i>(click to edit or delete)</i> </caption>
+                            <thead>
+                              <tr>
+                                <th>Transaction Type</th>
+                                <th>Transaction Name</th>
+                                <th>Transaction Amount</th>
+                                <th>Future Transaction Date</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                                
+                                {% for transaction in transactions %}
+                                <tr>
+                                    <td>{{ transaction.transaction_type }}</td>
+                                    <td>{{ transaction.transaction_name }}</td>
+                                    <td>{{ transaction.transaction_amount }}</td>
+                                    <td>{{ transaction.future_transaction_date }}</td>
+                                </tr>
+                                {% endfor %}
+                                    
+                              
+                              
+                            </tbody>
+                          </table>
+                    </div>
+                </div>
             </div>
-        </div> <!-- closing outer row -->
-        
-
-      
-    </main>
+        </div>
 
 {% endblock content %}
