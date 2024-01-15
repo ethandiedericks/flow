@@ -21,6 +21,13 @@ class TransactionManager(models.Manager):
             or 0,
         }
 
+    def get_category_details(self, user, category):
+        return (
+            self.filter(user=user, transaction_type=category)
+            .values("transaction_name")
+            .annotate(total_amount=models.Sum("transaction_amount"))
+        )
+
 
 class Transaction(models.Model):
     """

@@ -34,7 +34,10 @@ def get_grouped_data(request, transaction_type):
     # Serialize the data
     serialized_transactions = GroupedSerializer(grouped_data, many=True)
 
-    return JsonResponse(serialized_transactions.data, safe=False)
+    labels = [item["transaction_name"] for item in serialized_transactions.data]
+    values = [item["total_amount"] for item in serialized_transactions.data]
+
+    return JsonResponse({"labels": labels, "values": values}, safe=False)
 
 
 @login_required
@@ -50,3 +53,27 @@ def get_expenses(request):
 @login_required
 def get_investments(request):
     return get_grouped_data(request, "investment")
+
+
+@login_required
+def get_totals(request):
+    user = request.user
+    totals = Transaction.objects.get_totals(user)
+
+    # Retrieve detailed data for each category
+    income_details = list(Transaction.objects.get_category_details(user, "income"))
+    expense_details = list(Transaction.objects.get_category_details(user, "expense"))
+    investment_details = list(
+        Transaction.objects.get_category_details(user, "investment")
+    )
+
+    response_data = {
+        "total_incomes": totals["income_total"],
+        "total_expenses": totals["expense_total"],
+        "total_investments": totals["investment_total"],
+        "income_details": income_details,
+        "expense_details": expense_details,
+        "investment_details": investment_details,
+    }
+
+    return JsonResponse(response_data)
