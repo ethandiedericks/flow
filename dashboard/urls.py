@@ -4,7 +4,7 @@ from .views import (
     get_expenses,
     get_investments,
     dashboard,
-    get_grouped_data,
+    get_totals,
 )
 
 urlpatterns = [
@@ -13,8 +13,6 @@ urlpatterns = [
     path("get_expenses/", get_expenses, name="get_expenses"),
     path("get_investments/", get_investments, name="get_investments"),
     path(
-        "get_grouped_data/<str:transaction_type>/",
-        get_grouped_data,
-        name="get_grouped_data",
-    ),
+        "get_totals/", get_totals, name="get_totals"
+    ),  # Make sure the path ends with a trailing slash
 ]

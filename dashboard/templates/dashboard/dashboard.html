@@ -40,14 +40,11 @@
             <div class="row g-2">
                 <div class="col-md-8">
                     <div class="mb-2 mt-0">
-                        <div class="dropdown">
-                            <button class="btn btn-secondary income-dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                Chart Type
-                            </button>
-                            <ul class="dropdown-menu">
-                                <li><button class="dropdown-item dropdown-tog line-dropdown-item" type="button" aria-current="true">Income, Expenses & Investments - Line</button></li>
-                                <li><button class="dropdown-item bar-dropdown-item" type="button">Income, Expenses & Investments - Bar</button></li>
-                            </ul>
+                        <div >
+                            <select id="smallChartType">
+                                <option value="line">Line Chart</option>
+                                <option value="bar">Bar Chart</option>
+                            </select>
                         </div>
                     </div>
                     <div class="big-chart-card">
@@ -56,14 +53,11 @@
                 </div>
                 <div class="col-md-4">
                     <div class="mb-2 mt-0">
-                        <div class="dropdown">
-                            <button class="btn btn-secondary small-dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                Chart Type
-                            </button>
-                            <ul class="dropdown-menu">
-                                <li><button class="dropdown-item small-dropdown-item doughnut-dropdown-item" type="button" aria-current="true">Doughnut</button></li>
-                                <li><button class="dropdown-item small-dropdown-item pie-dropdown-item" type="button">Pie</button></li>
-                            </ul>
+                        <div>
+                            <select id="bigChartType">
+                                <option value="doughnut">Doughnut Chart</option>
+                                <option value="pie">Pie Chart</option>
+                            </select>
                         </div>
                     </div>
                     <div class="small-chart-card">
