@@ -16,7 +16,7 @@
                     <div class="dashboard-card income-card">
                         <div class="card-body">
                             <i class="fas fa-money-bill fa-3x"></i> <h5 class="card-title mt-3">Income</h5>
-                            <p class="card-text">$X,XXX</p>
+                            <p class="card-text">{{ total_incomes }}</p>
                         </div>
                     </div>
                 </div>
@@ -24,7 +24,7 @@
                     <div class="dashboard-card expenses-card">
                         <div class="card-body">
                             <i class="fas fa-shopping-cart fa-3x"></i> <h5 class="card-title mt-3">Expenses</h5>
-                            <p class="card-text">$X,XXX</p>
+                            <p class="card-text">{{ total_expenses }}</p>
                         </div>
                     </div>
                 </div>
@@ -32,7 +32,7 @@
                     <div class="dashboard-card investments-card">
                         <div class="card-body">
                             <i class="fas fa-chart-pie fa-3x"></i> <h5 class="card-title mt-3">Investments</h5>
-                            <p class="card-text">$X,XXX</p>
+                            <p class="card-text">{{ total_investments }}</p>
                         </div>
                     </div>
                 </div>
@@ -41,7 +41,7 @@
                 <div class="col-md-8">
                     <div class="mb-2 mt-0">
                         <div >
-                            <select id="smallChartType">
+                            <select class="form-select big-chart-select" id="smallChartType">
                                 <option value="line">Line Chart</option>
                                 <option value="bar">Bar Chart</option>
                             </select>
@@ -54,7 +54,7 @@
                 <div class="col-md-4">
                     <div class="mb-2 mt-0">
                         <div>
-                            <select id="bigChartType">
+                            <select class="form-select small-chart-select" id="bigChartType">
                                 <option value="doughnut">Doughnut Chart</option>
                                 <option value="pie">Pie Chart</option>
                             </select>
