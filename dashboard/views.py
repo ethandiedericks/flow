@@ -11,13 +11,16 @@ from django.shortcuts import render
 def dashboard(request):
     is_dashboard_page = request.path.startswith("/dashboard/")
     transactions = Transaction.objects.filter(user=request.user)
-
+    totals = Transaction.objects.get_totals(request.user)
     return render(
         request,
         "dashboard/dashboard.html",
         {
             "is_dashboard_page": is_dashboard_page,
             "transactions": transactions,
+            "total_incomes": totals["income_total"],
+            "total_expenses": totals["expense_total"],
+            "total_investments": totals["investment_total"],
         },
     )
 
