@@ -1,54 +1,45 @@
-document.addEventListener('DOMContentLoaded', function() {
-    var incomeTypeDropdown = document.getElementById('id_income_name');
-    var customIncomeGroup = document.querySelector('.custom-income-group');
+$(document).ready(function() {
 
-    if (incomeTypeDropdown && customIncomeGroup) {
-        customIncomeGroup.classList.add('d-none');
-        
-        incomeTypeDropdown.addEventListener('change', function() {
-            var selectedValue = this.value;
-            
-            if (selectedValue === 'custom') {
-                customIncomeGroup.classList.remove('d-none');
-            } else {
-                customIncomeGroup.classList.add('d-none');
-            }
+    // handle deletion
+    $('.badge-btn').click(function(event) {
+        event.preventDefault();
+
+        var transactionId = $(this).data('transaction-id');
+        var badgeContainer = $(this).closest('.badge-container');
+        var totalsContainer = $('.totals-container'); 
+        var legendContainer = $('.legend');
+
+        $.ajax({
+            type: 'POST',
+            url: 'delete_transaction/' + transactionId + '/',
+            data: {
+                csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
+            },
+            success: function(response) {
+                if (response.message === 'Transaction deleted successfully') {
+                    $('[data-transaction-id="' + transactionId + '"]').closest('.badge').remove();
+
+                    // Fetch updated totals from the server
+                    $.get('get_totals/', function(updatedTotals) {
+                        // Update the HTML with the new totals
+                        totalsContainer.find('.income-total').text(updatedTotals.income_total);
+                        totalsContainer.find('.expense-total').text(updatedTotals.expense_total);
+                        totalsContainer.find('.investment-total').text(updatedTotals.investment_total);
+
+                        if (updatedTotals.income_total === 0 && updatedTotals.expense_total === 0 && updatedTotals.investment_total === 0) {
+                            legendContainer.remove();
+                            totalsContainer.remove();
+                        }
+                    });
+                } else {
+                    console.error('Error:', response.message);
+                }
+            },
+            error: function() {
+                console.error('AJAX error');
+            },
         });
-    }
+    });
 
 
-    var expenseTypeDropdown = document.getElementById('id_expense_name');
-    var customExpenseGroup = document.querySelector('.custom-expense-group');
-
-    if (expenseTypeDropdown && customExpenseGroup) {
-        customExpenseGroup.classList.add('d-none');
-        
-        expenseTypeDropdown.addEventListener('change', function() {
-            var selectedValue = this.value;
-            
-            if (selectedValue === 'custom') {
-                customExpenseGroup.classList.remove('d-none');
-            } else {
-                customExpenseGroup.classList.add('d-none');
-            }
-        });
-    }
-
-    var investmentTypeDropdown = document.getElementById('id_investment_name');
-    var customInvestmentGroup = document.querySelector('.custom-investment-group');
-
-    if (investmentTypeDropdown && customInvestmentGroup) {
-        customInvestmentGroup.classList.add('d-none');
-        
-        investmentTypeDropdown.addEventListener('change', function() {
-            var selectedValue = this.value;
-            
-            if (selectedValue === 'custom') {
-                customInvestmentGroup.classList.remove('d-none');
-            } else {
-                customInvestmentGroup.classList.add('d-none');
-            }
-        });
-    } 
 });
-
