@@ -1,4 +1,5 @@
 {% extends "_base.html" %}
+{% load static %}
 
 {% block title %}
     Home
@@ -8,63 +9,42 @@
     class="home-page"
 {% endblock body_class %}
 
-{% block content %}
-<main class="container mt-4">
-    <section id="hero" class="py-5 text-white text-center ">
-        <div class="container">
-            <h1 class="display-4 mb-4">Welcome to Flow</h1>
-            <p class="lead">Discover a smarter way to manage your finances.</p>
-            <a href="{% url 'login' %}" class="btn btn-light btn-lg">Get Started</a>
-        </div>
-    </section>
+{% block header %}
+{% endblock header %}
 
-    <section id="features" class="py-5">
-        <div class="container">
-            <h2 class="text-center mb-5">Features</h2>
-            <div class="row">
-                <!-- Feature Cards -->
-                <div class="col-lg-4 mb-4">
-                    <div class="card border-0 shadow-sm h-100">
-                        <div class="card-body">
-                            <h3 class="card-title mb-3">Expense Tracking</h3>
-                            <p class="card-text">Effortlessly track your expenses and income.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 mb-4">
-                    <div class="card border-0 shadow-sm h-100">
-                        <div class="card-body">
-                            <h3 class="card-title mb-3">Financial Insights</h3>
-                            <p class="card-text">Gain valuable insights into your financial data.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 mb-4">
-                    <div class="card border-0 shadow-sm h-100">
-                        <div class="card-body">
-                            <h3 class="card-title mb-3">Budget Planning</h3>
-                            <p class="card-text">Plan and manage your budget effectively.</p>
-                        </div>
-                    </div>
-                </div>
+{% block content %}
+<section class="bg-white min-vh-100 d-flex align-items-center">
+    <div class="container-lg py-8">
+        <div class="row gap-8 justify-content-center">
+            <div class="col-lg-7 text-center">
+                <h1 class="mb-4 text-4xl font-extrabold tracking-tight leading-none md:text-5xl xl:text-6xl dark:text-white">Empower Your Finances with Flow</h1>
+                <p class="mb-6 font-light text-gray-500 lg:mb-8 md:text-lg lg:text-xl dark:text-gray-400">
+                    Take control of your financial journey with Flow, the premier all-in-one budget finance app. Seamlessly manage your incomes, track expenses, and optimize investments within a single, user-friendly platform. Gain insights into your financial health, enabling informed decisions and confident pursuit of your monetary goals.
+                </p>
+                
+                {% if not user.is_authenticated %}
+                    <a href="{% url 'signup' %}" class="btn btn-primary mr-3">
+                        Sign Up
+                    </a>
+                    <a href="{% url 'login' %}" class="btn btn-outline-dark">
+                    Log In
+                    </a>
+                {% else %}
+                <a href="{% url 'budget' %}" class="btn btn-primary mr-3">
+                    Budget
+                </a>
+                <a href="{% url 'dashboard' %}" class="btn btn-outline-dark">
+                    Dashboard
+                </a>
+                {% endif %}
+                
+                
+            </div>
+            <div class="col-lg-5 d-none d-lg-flex">
+                <img src="{% static 'images/mac_mockup.png' %}" alt="mockup" class="img-fluid">
             </div>
         </div>
-    </section>
-
-    <section id="about" class="py-5 bg-light">
-        <div class="container">
-            <h2 class="text-center mb-4">Our Mission</h2>
-            <p class="lead text-center">
-                At Flow, our mission is to revolutionize the way individuals engage with their finances. We're committed to providing a user-centric platform that simplifies financial management, fosters financial literacy, and encourages mindful spending and saving habits. We aim to empower our users to achieve their financial goals by offering intuitive tools, actionable insights, and personalized guidance. Our relentless focus is on creating a frictionless experience that allows everyone to navigate their financial journey with confidence and ease.
-            </p>
-        </div>
-    </section>
-
-</main>
-
-<footer class="bg-dark text-white py-4">
-    <div class="container text-center">
-        <p>© 2024 Flow. All rights reserved.</p>
     </div>
-</footer>
+</section>
+
 {% endblock content %}
