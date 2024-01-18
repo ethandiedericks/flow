@@ -33,11 +33,13 @@
       {% endblock title %}
     </title>
 </head>
-<header>
-  {% include '_header.html' %}
-</header>
-<body {% block body_class %}{% endblock body_class %}>
 
+<body {% block body_class %}{% endblock body_class %}>
+  {% block header %}
+  <header>
+      {% include '_header.html' %}
+  </header>
+{% endblock header %}
     {% block content %}
     {% endblock content %}
     
