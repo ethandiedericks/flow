@@ -1,10 +1,12 @@
 from django.db.models import Sum
-
-from budget.models import Transaction
-from .serializers import GroupedSerializer
 from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404, redirect
+from django.contrib import messages
+from django.template.loader import render_to_string
+from budget.models import Transaction
+from budget.forms import TransactionForm
+from .serializers import GroupedSerializer
 
 
 @login_required
@@ -80,3 +82,57 @@ def get_totals(request):
     }
 
     return JsonResponse(response_data)
+
+
+@login_required
+def edit_transaction(request, transaction_id):
+    transaction = get_object_or_404(Transaction, id=transaction_id, user=request.user)
+
+    if request.method == "POST":
+        form = TransactionForm(request.POST, instance=transaction)
+        if form.is_valid():
+            form.save()
+            return JsonResponse({"success": True})
+        else:
+            return JsonResponse({"success": False, "errors": form.errors}, status=400)
+
+    form = TransactionForm(instance=transaction)
+
+    if request.is_ajax():
+        # If the request is an AJAX request, render only the form and return it as JSON
+        form_html = render_to_string(
+            "dashboard/edit_transaction_form.html",
+            {"form": form, "transaction": transaction},
+        )
+        return JsonResponse({"form_html": form_html})
+    else:
+        # If it's a regular request, render the full page with the form
+        return render(
+            request,
+            "dashboard/edit_transaction.html",
+            {"form": form, "transaction": transaction},
+        )
+
+
+@login_required
+def fetch_edit_transaction_form(request, transaction_id):
+    transaction = get_object_or_404(Transaction, id=transaction_id, user=request.user)
+    form = TransactionForm(instance=transaction)
+    return render(
+        request,
+        "dashboard/edit_transaction_form.html",
+        {"form": form, "transaction": transaction},
+    )
+
+
+@login_required
+def delete_transaction(request, transaction_id):
+    transaction = get_object_or_404(Transaction, id=transaction_id, user=request.user)
+
+    if request.method == "POST":
+        transaction.delete()
+        return redirect("dashboard")
+
+    return render(
+        request, "dashboard/delete_transaction.html", {"transaction": transaction}
+    )
