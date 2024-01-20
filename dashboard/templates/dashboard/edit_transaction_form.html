@@ -1,0 +1,10 @@
+{% load static %}
+{% load crispy_forms_tags %}
+
+<form method="post" id="editTransactionForm" action="{% url 'edit_transaction' transaction.id %}">
+    {% csrf_token %}
+    {{ form | crispy }}
+    <button type="submit" class="btn btn-primary">Update Transaction</button>
+    <button type="button" class="btn btn-danger" id="deleteTransactionBtn">Delete Transaction</button>
+
+</form>

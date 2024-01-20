@@ -1,0 +1,10 @@
+  <div class="container mt-5">
+    <h2>Delete Transaction</h2>
+    <p>Are you sure you want to delete the transaction "{{ transaction.transaction_name }}"?</p>
+    <form method="post" action="{% url 'delete_transaction' transaction.id %}">
+      {% csrf_token %}
+      <button type="submit" class="btn btn-danger">Delete</button>
+      <a href="#" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</a>
+    </form>
+  </div>
+
