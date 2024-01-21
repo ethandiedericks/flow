@@ -35,21 +35,17 @@
 </head>
 
 <body {% block body_class %}{% endblock body_class %}>
-  {% block header %}
-  <header>
-      {% include '_header.html' %}
-  </header>
-{% endblock header %}
+    {% block header %}
+      <header>
+          {% include '_header.html' %}
+      </header>
+    {% endblock header %}
+
     {% block content %}
     {% endblock content %}
     
     <!-- Popper JS -->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
-    <!-- Budget JS -->
-    <script src="{% static 'budget/js/budget.js' %}"></script>
-    <!-- Dashboard JS -->
-    <script src="{% static 'dashboard/js/dashboard.js' %}"></script>
 
-    
 </body>
 </html>

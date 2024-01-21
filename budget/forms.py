@@ -2,6 +2,7 @@ import re
 
 from django import forms
 from django.utils.timezone import now
+from django.http import JsonResponse
 
 from .models import Transaction
 
@@ -52,3 +53,12 @@ class TransactionForm(forms.ModelForm):
                 )
 
         return cleaned_data
+
+    def as_json(self):
+        """
+        Convert form errors to a JSON format suitable for Ajax responses.
+        """
+        errors = {}
+        for field, messages in self.errors.items():
+            errors[field] = [str(message) for message in messages]
+        return JsonResponse({"errors": errors})

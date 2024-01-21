@@ -1,15 +1,17 @@
-function fetchData(url) {
-    return fetch(url)
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            return response.json();
-        })
-        .catch(error => {
-            console.error('There was a problem with the fetch operation:', error);
-        });
+async function fetchData(url) {
+    try {
+        const response = await fetch(url);
+
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+
+        return await response.json();
+    } catch (error) {
+        console.error('There was a problem with the fetch operation:', error);
+    }
 }
+
 document.addEventListener("DOMContentLoaded", function () {
     var bigChart;  // Variable to store the bigChart instance
     var smallChart;  // Variable to store the smallChart instance
@@ -159,4 +161,123 @@ document.addEventListener("DOMContentLoaded", function () {
     // Initial chart rendering
     updateChart("bigChart", smallChartType ? smallChartType.value : 'line');
     updateChart("smallChart", bigChartType ? bigChartType.value : 'doughnut');
+
+
+});
+// handle edit and delete operations on table data
+$(document).ready(function () {
+    var transID = "";
+    $('.transaction-row').click(function () {
+        var transactionId = $(this).data('transaction-id');
+        transID = transactionId;
+        var modalBody = $('#editTransactionModalBody');
+
+        // Use AJAX to fetch the form HTML from the server
+        $.ajax({
+            type: 'GET',
+            url: 'edit-transaction/' + transactionId + '/fetch/',
+            success: function (data) {
+                // Update the modal body with the fetched form HTML
+                modalBody.html(data);
+            },
+            error: function (error) {
+                console.log('Error fetching form: ', error);
+            }
+        });
+    });
+    // Handle the form submission event
+    $('#editTransactionModalBody').on('submit', '#editTransactionForm', function (e) {
+        e.preventDefault();
+
+        var form = $(this);
+        var formData = form.serialize();
+
+        // Check if the delete button is selected
+        var deleteTransaction = form.find('#id_delete').prop('checked');
+
+        if (deleteTransaction) {
+            // Perform delete action
+            if (confirm('Are you sure you want to delete this transaction?')) {
+                $.ajax({
+                    type: 'POST',
+                    url: form.attr('action'),
+                    data: formData,
+                    success: function (data) {
+                        console.log('Transaction deleted successfully:', data);
+                        $('#editTransactionModal').modal('hide');
+                        location.reload();
+                    },
+                    error: function (xhr, status, error) {
+                        console.error('AJAX error:', status, error);
+                        console.log(xhr.responseText);
+                    }
+                });
+            }
+        } else {
+            // Perform update action
+            $.ajax({
+                type: 'POST',
+                url: form.attr('action'),
+                data: formData,
+                success: function (data) {
+                    console.log('Transaction updated successfully:', data);
+                    $('#editTransactionModal').modal('hide');
+                    location.reload();
+                },
+                error: function (xhr, status, error) {
+                    console.error('AJAX error:', status, error);
+                    console.log(xhr.responseText);
+
+                    // Display server-side validation errors
+                    var errors = JSON.parse(xhr.responseText);
+                    for (var field in errors) {
+                        var errorMessage = errors[field][0];
+                        alert(errorMessage);
+                    }
+                }
+            });
+        }
+    });
+
+    // Handle the delete button click event
+    $('#editTransactionModalBody').on('click', '#deleteTransactionBtn', function () {
+        // Open the delete confirmation modal
+        var transactionId = transID;
+        var deleteModalUrl = 'edit-transaction/' + transactionId + '/delete/';
+        
+        console.log('Transaction ID:', transactionId);
+        $.get(deleteModalUrl, function (data) {
+            // Replace the content of the delete confirmation modal body with the new data
+            $('#deleteTransactionModal .modal-body').html(data);
+            // Hide edit modal
+            $('#editTransactionModal').modal('hide');
+            // Show the delete confirmation modal
+            $('#deleteTransactionModal').modal('show');
+        });
+    });
+
+    
+    // Handle the delete confirmation form submission event
+    $('body').on('submit', '#deleteTransactionForm', function (e) {
+        e.preventDefault();
+        
+        var deleteForm = $(this);
+        var deleteFormData = deleteForm.serialize();
+        
+        // Perform delete action
+        $.ajax({
+            type: 'POST',
+            url: deleteForm.attr('action'),
+            data: deleteFormData,
+            success: function (data) {
+                console.log('Transaction deleted successfully:', data);
+                $('#deleteTransactionModal').modal('hide');
+                location.reload();
+            },
+            error: function (xhr, status, error) {
+                console.error('AJAX error:', status, error);
+                console.log(xhr.responseText);
+            }
+        });
+    });
 });

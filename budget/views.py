@@ -26,19 +26,28 @@ class TransactionView(LoginRequiredMixin, View):
 
     def post(self, request):
         form = TransactionForm(request.POST)
+
         if form.is_valid():
             transaction = form.save(commit=False)
             transaction.user = request.user
             transaction.save()
-            return redirect("budget")
-        else:
-            transactions = Transaction.objects.filter(user=request.user)
 
-            context = {
-                "form": form,
-                "transactions": transactions,
-            }
-            return render(request, self.template_name, context)
+            # Return JsonResponse for successful form submission
+            return JsonResponse(
+                {
+                    "message": "Transaction created successfully",
+                    "transaction": {
+                        "transaction_type": transaction.transaction_type,
+                        "transaction_name": transaction.transaction_name,
+                        "transaction_amount": transaction.transaction_amount,
+                        "id": transaction.id,
+                    },
+                }
+            )
+
+        # Return JsonResponse for unsuccessful form submission
+        errors = form.errors
+        return JsonResponse({"errors": errors}, status=400)
 
 
 class DeleteTransactionView(LoginRequiredMixin, View):
