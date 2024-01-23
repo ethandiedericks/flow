@@ -9,7 +9,7 @@ $(document).ready(function() {
             $('.totals-container').hide();
         }
     });
-    
+
     // handle creation
     $('#transactionForm').submit(function(event) {
         event.preventDefault();
@@ -60,14 +60,17 @@ $(document).ready(function() {
     
 
     function displayFormErrors(errors) {
+        // Clear previous error messages
+        $('.form-error').text('');
+
         // Display form validation errors on the page
         for (var field in errors) {
             if (errors.hasOwnProperty(field)) {
-                var errorMessage = errors[field][0];  // Display only the first error for simplicity
-                // Assuming you have an element with the class 'form-error' to display the error
+                var errorMessage = errors[field][0];
                 $('.form-error-' + field).text(errorMessage);
             }
         }
     }
+
 
 });
