@@ -28,6 +28,13 @@ To set up Flow Finance locally, follow these steps:
     ```bash
     DJANGO_SECRET_KEY=your_secret_key_here
     DEBUG=True
+    EMAIL_HOST=your_email_host
+    EMAIL_HOST_USER=your_email_host_user
+    EMAIL_HOST_PASSWORD=your_email_host_password
+    EMAIL_PORT=your_email_port
+    EMAIL_USE_TLS=True
+    EMAIL_BACKEND=django.core.mail.backends.smtp.EmailBackend
+    DEFAULT_FROM_EMAIL=your_email
     ```
 7. Make migrations: `python manage.py makemigrations`
 8. Apply migrations: `python manage.py migrate`
