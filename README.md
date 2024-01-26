@@ -19,11 +19,26 @@ Flow Finance provides a robust platform for users to manage their financial tran
 
 To set up Flow Finance locally, follow these steps:
 
-1. Clone the repository: `git clone https://github.com/ethandiedericks/flow.git`
-2. Create a virtual environment: (mac)`python3 -m venv .venv` 
-3. Activate the virtual environment: `source .venv/bin/activate`
-4. Install dependencies: `pip install -r requirements.txt`
-5. Create a copy of the .env.template file and name it .env: `cp .env.template .env`
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/ethandiedericks/flow.git
+   ```
+2. Create a virtual environment: (mac)
+   ```bash
+   python3 -m venv .venv
+   ```
+3. Activate the virtual environment:
+   ```bash
+   source .venv/bin/activate
+   ```
+4. Install dependencies:
+   ```bash
+   pip install -r requirements.txt
+   ```
+5. Create a copy of the .env.template file and name it .env:
+   ```bash
+   cp .env.template .env
+   ```
 6. Configure the .env file: 
     ```bash
     DJANGO_SECRET_KEY=your_secret_key_here
@@ -36,7 +51,19 @@ To set up Flow Finance locally, follow these steps:
     EMAIL_BACKEND=django.core.mail.backends.smtp.EmailBackend
     DEFAULT_FROM_EMAIL=your_email
     ```
-7. Make migrations: `python manage.py makemigrations`
-8. Apply migrations: `python manage.py migrate`
-9. Create a superuser: `python manage.py createsuperuser`
-10. Start the development server: `python manage.py runserver`
+7. Make migrations:
+   ```bash
+   python manage.py makemigrations
+   ```
+8. Apply migrations:
+   ```bash
+    python manage.py migrate
+    ```
+9. Create a superuser:
+    ```bash
+    python manage.py createsuperuser
+    ```
+10. Start the development server:
+    ```bash
+    python manage.py runserver
+    ```
