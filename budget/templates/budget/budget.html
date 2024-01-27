@@ -13,6 +13,14 @@
 
 {% block content %}
 <div class="container budget-container">
+    {% if messages %}
+            {% for message in messages %}
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+              </div>
+            {% endfor %}
+        {% endif %}
     <header class="budget-head mt-2">
         <div class="container text-center ">
             <h1 class="display-4 ">Manage Your Finances</h1>
@@ -28,13 +36,6 @@
                             <h2>Create Transaction</h2>
                             <hr>
                             <form method="post" id="transactionForm">
-                                {% if messages %}
-                                    {% for message in messages %}
-                                        <div class="alert alert-success mt-3" role="alert">
-                                            {{ message }}
-                                        </div>
-                                    {% endfor %}
-                                {% endif %}
                                 {% csrf_token %}
                                 {{ form | crispy }}
                                 <button class="btn btn-custom" type="submit">Add transaction</button>
