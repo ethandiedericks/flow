@@ -31,7 +31,6 @@ class TransactionView(LoginRequiredMixin, View):
             transaction = form.save(commit=False)
             transaction.user = request.user
             transaction.save()
-
             # Return JsonResponse for successful form submission
             return JsonResponse(
                 {

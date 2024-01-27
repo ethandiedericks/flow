@@ -29,6 +29,19 @@ $(document).ready(function() {
 
                     // Reset the form
                     $('#transactionForm')[0].reset();
+                    var messageContainer = $('.message-container');
+
+                    // Create a new alert element
+                    var alertElement = $('<div class="alert alert-success alert-dismissible fade show" role="alert">');
+                    alertElement.text("Transaction successfully added!");
+
+                    // Create a close button for the alert
+                    var closeButton = $('<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">');
+                    
+                    alertElement.append(closeButton);
+
+                    // Append the alert to the message container
+                    messageContainer.html(alertElement);
                 } else {
                     console.error('Error:', response.message);
                 }
@@ -67,7 +80,7 @@ $(document).ready(function() {
         for (var field in errors) {
             if (errors.hasOwnProperty(field)) {
                 var errorMessage = errors[field][0];
-                $('.form-error-' + field).text(errorMessage);
+                $('.form-error-' + field).text(errorMessage).css('font-weight', 'bold');;
             }
         }
     }

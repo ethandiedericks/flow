@@ -13,14 +13,17 @@
 
 {% block content %}
 <div class="container budget-container">
-    {% if messages %}
+    <div class="message-container">
+        {% if messages %}
             {% for message in messages %}
-            <div class="alert alert-success alert-dismissible fade show" role="alert">
-                {{ message }}
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-              </div>
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
             {% endfor %}
         {% endif %}
+    </div>
+    
     <header class="budget-head mt-2">
         <div class="container text-center ">
             <h1 class="display-4 ">Manage Your Finances</h1>
@@ -37,7 +40,12 @@
                             <hr>
                             <form method="post" id="transactionForm">
                                 {% csrf_token %}
-                                {{ form | crispy }}
+                                {% for field in form %}
+                                    <div class="form-group">
+                                        {{ field|as_crispy_field }}
+                                        <div class="text-danger form-error form-error-{{ field.name }}"></div>
+                                    </div>
+                                {% endfor %}
                                 <button class="btn btn-custom" type="submit">Add transaction</button>
                             </form>
                             <div class="totals-container">
