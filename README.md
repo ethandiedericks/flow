@@ -23,23 +23,27 @@ To set up Flow Finance locally, follow these steps:
    ```bash
    git clone https://github.com/ethandiedericks/flow.git
    ```
-2. Create a virtual environment: (mac)
+2. Enter flow directory:
+   ```bash
+   cd flow
+   ```
+3. Create a virtual environment: (mac)
    ```bash
    python3 -m venv .venv
    ```
-3. Activate the virtual environment:
+4. Activate the virtual environment:
    ```bash
    source .venv/bin/activate
    ```
-4. Install dependencies:
+5. Install dependencies:
    ```bash
    pip install -r requirements.txt
    ```
-5. Create a copy of the .env.template file and name it .env:
+6. Create a copy of the .env.template file and name it .env:
    ```bash
    cp .env.template .env
    ```
-6. Configure the .env file: 
+7. Configure the .env file: 
     ```bash
     DJANGO_SECRET_KEY=your_secret_key_here
     DEBUG=True
@@ -51,19 +55,19 @@ To set up Flow Finance locally, follow these steps:
     EMAIL_BACKEND=django.core.mail.backends.smtp.EmailBackend
     DEFAULT_FROM_EMAIL=your_email
     ```
-7. Make migrations:
+8. Make migrations:
    ```bash
    python manage.py makemigrations
    ```
-8. Apply migrations:
+9. Apply migrations:
    ```bash
     python manage.py migrate
     ```
-9. Create a superuser:
+10. Create a superuser:
     ```bash
     python manage.py createsuperuser
     ```
-10. Start the development server:
+11. Start the development server:
     ```bash
     python manage.py runserver
     ```
