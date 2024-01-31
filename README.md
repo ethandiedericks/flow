@@ -46,7 +46,7 @@ To set up Flow Finance locally, follow these steps:
 7. Configure the .env file: 
     ```bash
     DJANGO_SECRET_KEY=your_secret_key_here
-    DEBUG=True
+    DJANGO_DEBUG=True
     EMAIL_HOST=your_email_host
     EMAIL_HOST_USER=your_email_host_user
     EMAIL_HOST_PASSWORD=your_email_host_password
